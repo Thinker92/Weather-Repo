@@ -22,4 +22,8 @@ let formSubmitHandler = function(event) {
 
 searchInputForm.addEventListener("submit", formSubmitHandler);
 
+// Function getCoordinates= Input: "City", output: (lat, long)
+// Function getWeatherData= Input: (Lat, Log), Output: Save to local storage function
+// Function saveToLocal= Input: {Weather Data}, city, Append to cities set cities to local storage
+// Function displayResults= Write to HTML from local storage 
 
