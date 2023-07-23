@@ -34,7 +34,7 @@ function getCoordinates(city) {
         .then(response => response.json())
             .then(data => {
                 if (data[0]){
-                    getWeatherData(data[0].lat, data[0].lon);
+                    getWeatherData(city,data[0].lat, data[0].lon);
                 } else {
                     alert("City not found.");
                 }
@@ -43,15 +43,19 @@ function getCoordinates(city) {
 }
 
 // Function getWeatherData= Input: (Lat, Log), Output: Save to local storage function
-function getWeatherData(lat, lon) {
+function getWeatherData(city,lat, lon) {
     let weatherURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${openWeatherAPI}`;
     fetch(weatherURL)
         .then(response => response.json())
             .then(data => {
                 console.log("Data: ");
                 console.log(data);
+                let cityData = {city: city, data: data}
+                cities.push(cityData);
+                localStorage.setItem('cities',JSON.stringify(cities));
                 // Temperature in Kelvins? 
-                // Convert to F
+                // Convert to F:
+                // eg. (301.55K - 273.15) * (9/5) +32 = 83.12F
             })
 }
 // Function saveToLocal= Input: {Weather Data}, city, Append to cities set cities to local storage
