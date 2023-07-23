@@ -48,16 +48,30 @@ function getWeatherData(city,lat, lon) {
     fetch(weatherURL)
         .then(response => response.json())
             .then(data => {
-                console.log("Data: ");
-                console.log(data);
+                let temp = (((data.list[0].main.temp) -273.15)*(9/5)+32).toFixed(1)
+                console.log("Temp: ");
+                console.log(temp);
+
                 let cityData = {city: city, data: data}
-                cities.push(cityData);
+                cities.push(cityData); 
                 localStorage.setItem('cities',JSON.stringify(cities));
                 // Temperature in Kelvins? 
                 // Convert to F:
                 // eg. (301.55K - 273.15) * (9/5) +32 = 83.12F
             })
 }
-// Function saveToLocal= Input: {Weather Data}, city, Append to cities set cities to local storage
+
 // Function displayResults= Write to HTML from local storage 
 
+// Today's Weather Card:
+// City Name + Today's Date (mm/DD/yyyy)
+// Temp (F)
+// Wind (MPH)
+// Humidity (%)
+
+// 5-Day Forecast Card:
+// Date
+// Icon
+// Temp
+// Wind
+// Humidity
