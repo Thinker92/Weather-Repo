@@ -28,7 +28,7 @@ searchInputForm.addEventListener("submit", formSubmitHandler);
 
 // Function getCoordinates= Input: "City", output: (lat, long)
 function getCoordinates(city) {
-    let geocodingURL = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${openWeatherAPI}`;
+    let geocodingURL = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${openWeatherAPI}`;
 
     fetch(geocodingURL)
         .then(response => response.json())
