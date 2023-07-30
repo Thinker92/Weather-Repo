@@ -56,6 +56,7 @@ function getWeatherData(city,lat, lon) {
                 cities.push(cityData); 
                 localStorage.setItem('cities',JSON.stringify(cities));
                 displayResults(data);
+                display5DayForecast(data);
             })
 }
 
@@ -82,6 +83,14 @@ function displayResults(weatherData) {
     todaysForecastData.appendChild(tempEl);
     todaysForecastData.appendChild(windEl);
     todaysForecastData.appendChild(humidityEl);
+    //Add the weather icon
+    let weatherIconEl = document.createElement("img");
+    weatherIconEl.setAttribute("src", "http://openweathermap.org/img/w/" + weatherData.list[0].weather[0].icon + ".png");
+    
+    weatherIconEl.classList.add('weather-icon');
+    
+    todaysForecastData.appendChild(weatherIconEl);
+
 }
 
 // Load past searches from local storage
@@ -114,14 +123,48 @@ prevSearchEl.addEventListener("click", function(event) {
     }
 });
 
+// Display 5-day forecast
+function display5DayForecast(weatherData) {
+    // Clear existing forecast
+    let forecastCards = document.querySelector("#forecastCards");
+    forecastCards.innerHTML = "";
+    
+    // Create a card for each day
+    for (let i = 1; i <= 5; i++) {
+        let forecastData = weatherData.list[i];
+
+        let forecastCard = document.createElement("div");
+        forecastCard.setAttribute('class', 'card');
+
+        let forecastDate = document.createElement("h5");
+        forecastDate.textContent = new Date(forecastData.dt * 1000).toLocaleDateString();
+        forecastCard.appendChild(forecastDate);
+
+        let forecastTemp = document.createElement("p");
+        forecastTemp.textContent = "Temp: " + (((forecastData.main.temp) -273.15)*(9/5)+32).toFixed(1) + " °F";
+        forecastCard.appendChild(forecastTemp);
+
+        let forecastWind = document.createElement("p");
+        forecastWind.textContent = "Wind: " + forecastData.wind.speed + " MPH";
+        forecastCard.appendChild(forecastWind);
+
+        let forecastHumidity = document.createElement("p");
+        forecastHumidity.textContent = "Humidity: " + forecastData.main.humidity + " %";
+        forecastCard.appendChild(forecastHumidity);
+        let forecastIcon = document.createElement("img");
+        forecastIcon.setAttribute("src", "http://openweathermap.org/img/w/" + forecastData.weather[0].icon + ".png");
+        forecastIcon.classList.add('weather-icon');
+        forecastCard.appendChild(forecastIcon);
+
+        forecastCards.appendChild(forecastCard);
+    }
+}
+
+
+
 loadPastSearches();
 
 
-// Today's Weather Card:
-// City Name + Today's Date (mm/DD/yyyy)
-// Temp (F)
-// Wind (MPH)
-// Humidity (%)
 
 // 5-Day Forecast Card:
 // Date
