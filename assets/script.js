@@ -106,11 +106,13 @@ function loadPastSearches() {
 
     // Create a button for each past search
     for (let i = 0; i < cities.length; i++) {
+        let cityLi = document.createElement("li");
         let cityBtn = document.createElement("button");
         cityBtn.textContent = cities[i].city;
-        cityBtn.setAttribute('class', 'btn btn-secondary');
+        cityBtn.setAttribute('class', 'btn btn-primary'); 
         cityBtn.setAttribute('data-index', i);
-        prevSearchEl.appendChild(cityBtn);
+        cityLi.appendChild(cityBtn); 
+        prevSearchEl.appendChild(cityLi); 
     }
 }
 
@@ -120,6 +122,7 @@ prevSearchEl.addEventListener("click", function(event) {
     if (element.matches("button") === true) {
         let index = element.getAttribute('data-index');
         displayResults(cities[index].data);
+        display5DayForecast(cities[index].data);
     }
 });
 
@@ -128,10 +131,19 @@ function display5DayForecast(weatherData) {
     // Clear existing forecast
     let forecastCards = document.querySelector("#forecastCards");
     forecastCards.innerHTML = "";
+
+    let forecastRow = document.createElement('div');
+    forecastRow.setAttribute('class', 'row');
+    forecastCards.appendChild(forecastRow);
     
     // Create a card for each day
     for (let i = 1; i <= 5; i++) {
         let forecastData = weatherData.list[i];
+
+        // Create a column to contain the forecast card
+        let forecastCol = document.createElement('div');
+        forecastCol.setAttribute('class', 'col-md-2');
+        forecastRow.appendChild(forecastCol);
 
         let forecastCard = document.createElement("div");
         forecastCard.setAttribute('class', 'card');
@@ -156,7 +168,7 @@ function display5DayForecast(weatherData) {
         forecastIcon.classList.add('weather-icon');
         forecastCard.appendChild(forecastIcon);
 
-        forecastCards.appendChild(forecastCard);
+        forecastCol.appendChild(forecastCard);
     }
 }
 

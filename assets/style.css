@@ -2,3 +2,12 @@
 .weather-icon {
     width: 50px; 
 }
+
+#pastSearch li {
+    list-style-type: none; /* Removes bullet points */
+    margin: 10px 0; 
+}
+
+#pastSearch button {
+    width: 50%; 
+}
